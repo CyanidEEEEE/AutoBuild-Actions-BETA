@@ -583,7 +583,7 @@ ReleaseDL() {
 }
 
 ClashDL() {
-	TMP_PATH=/opt/OpenClash
+	TMP_PATH=/tmp/OpenClash
 	
 	PLATFORM=$1
 	CORE_TYPE=$2
@@ -601,8 +601,8 @@ ClashDL() {
 		CORE_PATH=$TMP_PATH/dev/premium
 	;;
 	esac
-
-        mkdir -p ${CORE_PATH}
+	
+	mkdir -p ${CORE_PATH}
 	
 	CORE=(
 		$(ls -1 $CORE_PATH | grep "clash-linux-$PLATFORM" | tr '\n' ' ')
@@ -626,18 +626,17 @@ ClashDL() {
 	
 	if [[ ! $TARGET_CORE ]]
 	then
-		ECHO "$PLATFORM $CORE_TYPE Not found"
-		for i in meta
+		ECHO "$PLATFORM $CORE_TYPE Not found, Skip."
+		for i in meta dev
 		do
 			cd $TMP_PATH/dev/$i
 			SUP_PLATDORM=$(ls -1 2> /dev/null | sed -r 's/clash-linux-(.*).tar.gz/\1/')
-			ECHO "CORE Supported platform: \n$SUP_PLATDORM"
+			ECHO "CORE Supported platform in [$i]: \n$SUP_PLATDORM"
 			cd - > /dev/null
 		done
-		return
-	else
-		ECHO "TARGET_CORE: $TARGET_CORE"
+		return 0
 	fi
+	ECHO "TARGET_CORE: $TARGET_CORE"
 	MKDIR ${BASE_FILES}/etc/openclash/core
 	case $CORE_TYPE in
 	dev | meta)
