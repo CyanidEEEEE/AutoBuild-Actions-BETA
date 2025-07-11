@@ -76,7 +76,7 @@ env:
 
 jobs:
   Compile:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     permissions:
       issues: write
       pull-requests: write
@@ -93,7 +93,7 @@ jobs:
         general_exclude: |-
           ^GCC$
           ^G\+\+$
-          Clang
+          Clash
           LLVM
         docker_include: ".+"
         docker_prune: "True"
