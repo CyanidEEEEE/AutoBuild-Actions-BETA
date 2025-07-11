@@ -601,6 +601,8 @@ ClashDL() {
 		CORE_PATH=$TMP_PATH/dev/premium
 	;;
 	esac
+
+        mkdir -p ${CORE_PATH}
 	
 	CORE=(
 		$(ls -1 $CORE_PATH | grep "clash-linux-$PLATFORM" | tr '\n' ' ')
